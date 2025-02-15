@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ticket Booking</title>
+    <!--Google Fonts and Icons-->
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Round|Material+Icons+Sharp|Material+Icons+Two+Tone"
+      rel="stylesheet"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        width: 100%;
+        height: 100vh;
+        margin: 0;
+        padding: 0;
+      }
+      .center {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: linear-gradient(
+          to right,
+          rgb(162, 216, 162),
+          rgb(102, 194, 102)
+        );
+      }
+      .tickets {
+        width: 550px;
+        height: fit-content;
+        border: 0.4mm solid rgba(0, 0, 0, 0.08);
+        border-radius: 3mm;
+        box-sizing: border-box;
+        padding: 10px;
+        font-family: poppins;
+        max-height: 96vh;
+        overflow: auto;
+        background: white;
+        box-shadow: 0px 25px 50px -12px rgba(0, 0, 0, 0.25);
+      }
+      .ticket-selector {
+        background: rgb(243, 243, 243);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-direction: column;
+        box-sizing: border-box;
+        padding: 20px;
+      }
+      .head {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 30px;
+      }
+      .title {
+        font-size: 16px;
+        font-weight: 600;
+      }
+      .seats {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        min-height: 150px;
+        position: relative;
+      }
+      .status {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-evenly;
+      }
+      .seats::before {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translate(-50%, 0);
+        width: 220px;
+        height: 7px;
+        background: rgb(141, 198, 255);
+        border-radius: 0 0 3mm 3mm;
+        border-top: 0.3mm solid rgb(180, 180, 180);
+      }
+      .item {
+        font-size: 12px;
+        position: relative;
+      }
+      .item::before {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: -12px;
+        transform: translate(0, -50%);
+        width: 10px;
+        height: 10px;
+        background: rgb(255, 255, 255);
+        outline: 0.2mm solid rgb(120, 120, 120);
+        border-radius: 0.3mm;
+      }
+      .item:nth-child(2)::before {
+        background: rgb(180, 180, 180);
+        outline: none;
+      }
+      .item:nth-child(3)::before {
+        background: rgb(28, 185, 120);
+        outline: none;
+      }
+      .all-seats {
+        display: grid;
+        grid-template-columns: repeat(10, 1fr);
+        grid-gap: 15px;
+        margin: 60px 0;
+        margin-top: 20px;
+        position: relative;
+      }
+      .seat {
+        width: 20px;
+        height: 20px;
+        background: white;
+        border-radius: 0.5mm;
+        outline: 0.3mm solid rgb(180, 180, 180);
+        cursor: pointer;
+      }
+      .all-seats input:checked + label {
+        background: rgb(28, 185, 120);
+        outline: none;
+      }
+      .seat.booked {
+        background: rgb(180, 180, 180);
+        outline: none;
+      }
+      input {
+        display: none;
+      }
+      .timings {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        margin-top: 30px;
+      }
+      .dates {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .dates-item {
+        width: 50px;
+        height: 40px;
+        background: rgb(233, 233, 233);
+        text-align: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        padding: 10px 0;
+        border-radius: 2mm;
+        cursor: pointer;
+      }
+      .day {
+        font-size: 12px;
+      }
+      .times {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-top: 10px;
+      }
+      .time {
+        font-size: 14px;
+        width: fit-content;
+        padding: 7px 14px;
+        background: rgb(233, 233, 233);
+        border-radius: 2mm;
+        cursor: pointer;
+      }
+      .timings input:checked + label {
+        background: rgb(28, 185, 120);
+        color: white;
+      }
+      .price {
+        width: 100%;
+        box-sizing: border-box;
+        padding: 10px 20px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .total {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: center;
+        font-size: 16px;
+        font-weight: 500;
+      }
+      .total span {
+        font-size: 11px;
+        font-weight: 400;
+      }
+      .price button {
+        background: rgb(60, 60, 60);
+        color: white;
+        font-family: poppins;
+        font-size: 14px;
+        padding: 7px 14px;
+        border-radius: 2mm;
+        outline: none;
+        border: none;
+        cursor: pointer;
+      }
+      .slot-selection {
+        margin-top: 20px;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        background: #fff;
+      }
+      .slot-selection p {
+        margin: 5px 0;
+      }
+      .accept-btn,
+      .reject-btn {
+        margin-top: 10px;
+        padding: 5px 10px;
+        border-radius: 3px;
+        cursor: pointer;
+      }
+      .accept-btn {
+        background-color: #28b410;
+        color: white;
+      }
+      .reject-btn {
+        background-color: #b42f28;
+        color: white;
+      }
+     
+    .dashboard-heading {
+      font-size: 2.5rem; /* Responsive heading */
+      margin-bottom: 1.5rem;
+      text-align: center; /* Center the heading */
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    }
+    .dashboard-heading {
+  font-size: 2.5rem;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.5); /* Glow effect */
+  transition: text-shadow 0.3s ease; /* Smooth transition for hover */
+}
+
+.dashboard-heading:hover {
+  text-shadow: 0 0 20px rgba(255, 255, 255, 0.8); /* Increased glow on hover */
+}
+
+.dashboard-heading {
+  font-size: 2.5rem;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+  transition: text-shadow 0.3s ease, transform 0.3s ease; /* Add transform transition */
+}
+
+.dashboard-heading:hover {
+  text-shadow: 0 0 20px rgba(255, 255, 255, 0.8);
+  transform: scale(1.1); /* Zoom up on hover */
+}
+
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(90deg, #4e54c8, #8f94fb);
+      color: black;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start; /* Align content to the top */
+      align-items: center;
+      padding: 2rem; /* Add padding for better spacing */
+    }
+
+    .slots {
+      width: 90%; /* Make the slots container responsive */
+      max-width: 600px; /* Limit the maximum width */
+    }
+
+    .slot-selection {
+      margin-top: 1rem;
+      padding: 1.2rem;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      background: #fff;
+      font-size: 1.1rem; /* Increase font size */
+      transition: background-color 0.3s; /* Add smooth transition */
+    }
+
+    .slot-selection:hover {
+      background-color: #f0f0f0; /* Change background on hover */
+    }
+
+    .slot-selection p {
+      margin: 0.5rem 0;
+    }
+
+    .accept-btn, .reject-btn {
+      margin-top: 0.8rem;
+      padding: 0.4rem 0.8rem;
+      border-radius: 3px;
+      cursor: pointer;
+    } 
+    .slot-selection p {
+  margin: 0.5rem 0;
+  transition: text-shadow 0.3s ease, transform 0.3s ease; /* Add transitions */
+}
+
+.slot-selection p:hover {
+  text-shadow: 0 0 5px rgba(0, 0, 0, 0.3); /* Subtle glow on hover */
+  transform: scale(1.05); /* Slight zoom on hover */
+}
+
+.accept-btn, .reject-btn {
+  margin-top: 0.8rem;
+  padding: 0.4rem 0.8rem;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: text-shadow 0.3s ease, transform 0.3s ease; /* Add transitions */
+}
+
+.accept-btn:hover, .reject-btn:hover {
+  text-shadow: 0 0 5px rgba(0, 0, 0, 0.3); /* Subtle glow on hover */
+  transform: scale(1.05); /* Slight zoom on hover */
+}
+.slot-selection p {
+  margin: 0.5rem 0;
+  transition: text-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.slot-selection p:first-child, /* Target "Student id" */
+.slot-selection p:nth-child(2) { /* Target "Status" */
+  font-weight: bold; 
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  font-size: 20px;
+  /* font-family: 'Your desired font', sans-serif; */ /* Uncomment and replace 'Your desired font' with the actual font name if you want to change the font */
+}
+.accept-btn, .reject-btn {
+  margin-top: 0.8rem;
+  padding: 0.4rem 0.8rem;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: text-shadow 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease; /* Add box-shadow transition */
+  margin-right: 30px; /* Add some spacing between the buttons */
+}
+
+.accept-btn:hover, .reject-btn:hover {
+  text-shadow: 0 0 5px rgba(0, 0, 0, 0.3); 
+  transform: scale(1.05); 
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Add glow effect on hover */
+}
+.slot-selection {
+  margin-top: 1rem;
+  padding: 1.2rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background: #fff; /* Original white background */
+  font-size: 1.1rem;
+  transition: background-image 0.3s ease, text-shadow 0.3s ease, transform 0.3s ease; /* Add background-image transition */
+}
+
+.slot-selection:hover {
+  background-image: linear-gradient(to right, #f0f0f0, #e0e0e0); /* Gradient on hover */
+  text-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+  transform: scale(1.05);
+}
+.accept-btn, .reject-btn {
+  margin-top: 0.8rem;
+  padding: 0.4rem 0.8rem;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease, text-shadow 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+  margin-right: 10px; 
+  background-color: white; /* Set background to white */
+  color: #333; /* Set initial text color */
+  border: 1px solid #ccc; /* Add a subtle border */
+}
+
+.accept-btn:hover {
+  background-color: #28a745; /* Green on hover */
+  color: white;
+  text-shadow: 0 0 5px rgba(0, 0, 0, 0.3); 
+  transform: scale(1.05); 
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); 
+}
+
+.reject-btn:hover {
+  background-color: #dc3545; /* Red on hover */
+  color: white;
+  text-shadow: 0 0 5px rgba(0, 0, 0, 0.3); 
+  transform: scale(1.05); 
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); 
+}
+
+.slot-selection {
+  /* ... other styles ... */
+  display: flex; /* Enable flexbox for alignment */
+  flex-direction: column; /* Arrange items vertically */
+  align-items: center; /* Center items horizontally */
+}
+body {
+  /* ... other styles ... */
+  background-image: url("https://media.istockphoto.com/id/494094990/vector/figures-3d-seamless-wallpaper-pattern.jpg?s=612x612&w=0&k=20&c=q8qUEG3rkGMDR0kZ4kRf577W6V3iqlvTtPvyvzXb23g="); /* Replace with your GIF path */
+  background-repeat: no-repeat;
+  background-size: cover; /* Or adjust as needed */
+}
+
+
+    
+    </style>
+  </head>
+  <body>
+    <h1 class="dashboard-heading">Welcome to Dashboard</h1>
+
+    
+    <div class="slots" id="slotsBox"></div>
+  </body>
+  <script>
+    if (localStorage.getItem("slots") === null) {
+      localStorage.setItem("slots", JSON.stringify([]));
+    }
+    const slotsBox = document.getElementById("slotsBox");
+
+    const currentUser = {
+      isStudent: false,
+      name: "My Teacher Name",
+      email: "teacheremail@example.com",
+      password: "1234567",
+      teacherId: "1",
+    };
+
+    var slots = JSON.parse(localStorage.getItem("slots"));
+    const currentTeacherSlots = slots.filter(
+      (slot) => slot.teacherId === currentUser.teacherId
+    );
+
+    if (currentTeacherSlots.length) {
+      currentTeacherSlots.forEach((slot) => {
+        const slotDiv = document.createElement("div");
+        slotDiv.classList.add("slot-selection");
+        slotDiv.innerHTML += `
+            <p>Student id: ${slots[slots.indexOf(slot)].studentId}</p>
+            <p>status: ${
+              slots[slots.indexOf(slot)].isSlotBooked ? "Accepted" : "Pending"
+            }</p>
+            <button class="accept-btn" onclick="acceptSlot(${slots.indexOf(
+              slot
+            )})">Accept</button>
+            <button class="reject-btn" onclick="rejectSlot(${slots.indexOf(
+              slot
+            )})">Reject</button>
+            `;
+        slotsBox.appendChild(slotDiv);
+      });
+    }
+    function acceptSlot(slotIndex) {
+      console.log(slotIndex);
+      slots[slotIndex].isSlotBooked = true;
+      localStorage.setItem("slots", JSON.stringify(slots));
+      location.reload();
+    }
+  </script>
+</html>

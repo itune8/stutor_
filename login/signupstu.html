@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="stylesheet" href="/css/index (1).css">
+  <title>Tutor Login</title>
+  <style>
+    #notification {
+        position: fixed;
+        top: 10%; /* Position at the top-center */
+        left: 50%;
+        transform: translateX(-50%); 
+        background-color: #4CAF50; /* Green background */
+        color: white;
+        padding: 15px;
+        font-size: 20px; 
+        opacity: 0;
+        transition: opacity 0.5s; 
+        z-index: 1000; 
+    }
+
+    #notification.show {
+        opacity: 1;
+    }
+  </style>
+</head>
+<body>
+    <section>
+        <div class="form-box">
+            <div class="form-value">
+                <form action="" onsubmit="showNotification()"> 
+                    <h2>Sign Up</h2>
+                    <div class="inputbox">
+                        <ion-icon name="mail-outline"></ion-icon>
+                        <input type="email" required>
+                        <label for="">Email</label>
+                    </div>
+                    <div class="inputbox">
+                        <ion-icon name="lock-closed-outline"></ion-icon>
+                        <input type="password" required>
+                        <label for="">Password</label>
+                    </div>
+                    <div class="inputbox">
+                        <ion-icon name="call-outline"></ion-icon>
+                        <input type="password" required>
+                        <label for="">Phone No.</label>
+                    </div>
+                    <div class="forget">
+                        <label for=""><input type="checkbox">Remember Me  <a href="#">Forget Password</a></label>
+                      
+                    </div>
+                    <button type="submit">Sign Up</button> 
+                    <div class="register">
+                        <p>Don't have a account <a href="#">Register</a></p>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <div id="notification">Successfully Registered!</div>
+
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+    <script>
+         function showNotification() {
+            event.preventDefault(); 
+
+            var notification = document.getElementById("notification");
+            notification.classList.add("show");
+
+            // Remove the green flash effect and background image removal
+            // document.body.classList.add("flash");
+
+            setTimeout(function(){ 
+                // document.body.classList.remove("flash"); 
+                notification.classList.remove("show"); 
+            }, 3000); // Show the notification for 3 seconds
+        }
+    </script>
+</body>
+</html>
