@@ -4,7 +4,7 @@
 
 Introducing "Stutor" - an innovative platform designed to revolutionize the way students receive tuition. Stutor is a peer-to-peer learning platform that connects students who excel in particular subjects with those who require additional guidance.
 
-CLICK HERE TO GO TO THE LIVE WEBSITE https://samarth-here.github.io/STUTOR_/
+CLICK HERE TO GO TO THE LIVE WEBSITE https://itune8.github.io/stutor_/
 (P.S. It takes Around a minute to load )
 
 ## Features
@@ -60,7 +60,7 @@ npm start
 
 
 4. **Access the Platform:**
-Open your web browser and go to https://samarth-here.github.io/stutorr to access Stutor.
+Open your web browser and go to https://itune8.github.io/stutor_/ to access Stutor.
 
 ## Contributing
 
