@@ -164,15 +164,8 @@
   justify-content: space-between; /* Space them out evenly */
 }
 
-#random-gif {
-  width: 50%;
-  height: auto; /* Maintain aspect ratio */
-}
-#random-gif {
-  width: 50%;
-  height: auto;
-  transition: opacity 0.5s ease; /* Add a smooth transition for opacity */
-}
+/* Removed fixed sizing on #random-gif so the hero frame controls dimensions */
+#random-gif { transition: opacity 0.5s ease; }
 .navbar {
   height: 80px; /* Adjust the height as needed */
  /* Apply the animation */
@@ -205,8 +198,17 @@
 
 #left, #left1 {
   display: flex;
-  position: relative;
-  left: 80%;
-  top: -120px;
- /* Adjust this value as needed to position them perfectly on the right */
+  position: static;
+}
+
+/* Keep login buttons aligned neatly and responsively */
+#login-actions .login-box { margin: 0 4px; }
+
+@media (max-width: 991px){
+  #login-actions .d-flex{ justify-content: center !important; }
+}
+
+@media (max-width: 576px){
+  #login-actions .d-flex{ flex-direction: column !important; gap: 12px !important; align-items: stretch !important; }
+  #login-actions .login-box form a{ width: 100%; text-align: center; }
 }

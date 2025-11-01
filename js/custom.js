@@ -49,55 +49,82 @@
   
   })(window.jQuery);
 
+  // Endless smooth typewriter (type, pause, delete, repeat)
   const stutorText = document.getElementById('stutor-text');
-    const textToType = "STUTOR.";
-    let charIndex = 0;
-    let isDeleting = false;
-
-    function typeWriter() {
-        const currentText = textToType.substring(0, charIndex);
-        
-        if (!isDeleting && charIndex < textToType.length) {
-            stutorText.textContent = currentText;
-            charIndex++;
-            setTimeout(typeWriter, 200); 
-        } else if (isDeleting && charIndex > 0) {
-            stutorText.textContent = currentText.slice(0, -1); // Remove last character smoothly
-            charIndex--;
-            setTimeout(typeWriter, 100); 
-        } else {
-            isDeleting = !isDeleting;
-            stutorText.style.opacity = isDeleting ? 0 : 1; // Fade out/in for smoother transition
-            setTimeout(typeWriter, 300); 
-        }
+  const textToType = 'STUTOR.';
+  let idx = 0;
+  let deleting = false;
+  function typeWriter() {
+    if (!stutorText) return;
+    stutorText.textContent = textToType.slice(0, idx);
+    if (!deleting && idx < textToType.length) {
+      idx++;
+      setTimeout(typeWriter, 140); // slow typing
+    } else if (deleting && idx > 0) {
+      idx--;
+      setTimeout(typeWriter, 90); // slightly faster delete
+    } else {
+      deleting = !deleting;
+      setTimeout(typeWriter, deleting ? 1000 : 600); // hold before switching
     }
-
-    typeWriter();
+  }
+  typeWriter();
     window.onload = function() {
+      // Local assets; preload before swap and cross-fade
       const gifs = [
-        'https://mir-s3-cdn-cf.behance.net/project_modules/disp/65626933112811.56a01870441f4.gif',
-        'https://media.giphy.com/media/SWoSkN6DxTszqIKEqv/giphy.gif',
-        'https://cdn.dribbble.com/users/1233499/screenshots/3900568/education.gif'
+        './Prfi/physics2.gif',
+        './Prfi/Graph%20Theory.gif',
+        './Prfi/Dlfinal.gif',
+        './Prfi/exams.gif',
+        './Prfi/development.gif',
+        './Prfi/devops.gif',
+        './Prfi/0_2blaR2l8ZqJ-HAaV.gif',
+        './Prfi/1_SazB8drLx74W-bFBqag9zA.gif'
       ];
 
       const gifElement = document.getElementById('random-gif');
+      if (!gifElement) return;
+      gifElement.style.opacity = 0;
 
-      function changeGif() {
-        // Fade out the current GIF
-        gifElement.style.opacity = 0;
-      
-        setTimeout(() => {
-          const randomIndex = Math.floor(Math.random() * gifs.length);
-          gifElement.src = gifs[randomIndex];
-      
-          // Fade in the new GIF after a short delay
-          gifElement.style.opacity = 1;
-      
-          // Schedule the next GIF change after the transition completes
-          setTimeout(changeGif, 5500); // 5000ms (GIF duration) + 500ms (transition duration)
-        }, 500); // Transition duration
+      function preload(src) {
+        return new Promise((resolve, reject) => {
+          const img = new Image();
+          img.onload = () => resolve(src);
+          img.onerror = reject;
+          img.src = src;
+        });
       }
-      
-      // Change GIF initially on page load
-      changeGif();
+
+      async function changeGif() {
+        try {
+          const next = gifs[Math.floor(Math.random() * gifs.length)];
+          const src = await preload(next);
+          // fade out
+          gifElement.style.opacity = 0;
+          setTimeout(() => {
+            gifElement.src = src;
+            // fade in
+            requestAnimationFrame(() => {
+              gifElement.style.opacity = 1;
+            });
+          }, 250);
+        } catch {}
+        // schedule next
+        setTimeout(changeGif, 6000);
+      }
+
+  // Preload all for snappy swaps
+      gifs.forEach((g) => { const i = new Image(); i.src = g; });
+      // initial image from a random pick
+      const initial = gifs[Math.floor(Math.random() * gifs.length)];
+      preload(initial).then((src) => {
+        gifElement.src = src;
+        gifElement.style.opacity = 1;
+        setTimeout(changeGif, 6000);
+      }).catch(() => {
+        gifElement.style.opacity = 1;
+        setTimeout(changeGif, 6000);
+      });
+      // Force dark theme always
+      document.body.classList.add('dark-theme');
     }

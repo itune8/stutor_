@@ -5,9 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
 <meta name="Description" content="Enter your description here"/>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/css/bootstrap.min.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-<link rel="stylesheet" href="assets/css/style.css">
+<link rel="stylesheet" href="/css/bootstrap.min.css">
+<link rel="stylesheet" href="/css/bootstrap-icons.css">
+<link rel="stylesheet" href="/css/responsive-fixes.css">
+<link rel="stylesheet" href="/teachers/assets/css/style.css">
 <title>Title</title>
 </head>
 <style>
@@ -258,34 +259,27 @@
 </style>
 <body>
    
+    <nav class="navbar navbar-light bg-light mb-4">
+      <div class="container d-flex justify-content-between">
+        <a class="navbar-brand" href="/">STUTOR</a>
+        <a class="btn btn-outline-secondary" href="/schedule/?teacher=Aniket%20Kumar&subject=Full%20Stack%20Development">Book</a>
+      </div>
+    </nav>
+
     <div class="container">
-    <div class="card" style="width: 18rem; margin-top: 100px;" >
-        <img src="./Images/Aniket.jpg" class="card-img-top" alt="..." >
-        <div class="card-body">
-          <h5 class="card-title"><Strong>Aniket Kumar</Strong></h5>
-          <p class="card-text">Hey,I'm Aniket, a dedicated Full Stack Developer . I delve into the mysteries of the universe through research, teaching, and inspiring students' curiosity</p>
-        <div class="btn btn-primary">Developer</div>
+      <div class="row g-4">
+        <div class="col-md-4">
+          <div class="card h-100">
+            <img src="./Images/Aniket.jpg" class="card-img-top img-fluid" alt="Aniket Kumar">
+            <div class="card-body">
+              <h5 class="card-title"><strong>Aniket Kumar</strong></h5>
+              <p class="card-text">Hey, I'm Aniket, a dedicated Full Stack Developer. I delve into the mysteries of the universe through research, teaching, and inspiring students' curiosity.</p>
+              <span class="badge bg-primary">Full Stack Development</span>
+            </div>
+          </div>
         </div>
-      </div>
-      <div id="meet">
-      <div class="form-check" style="border: 3px solid black; width: 600px; height: 50px; font-size: 30px; display: flex; gap: 15px;" >
-        <input class="form-check" type="checkbox" value="" id="flexCheckIndeterminate">
-        <label class="form-check-label" for="flexCheckIndeterminate" >
-          Schedule Virtual Meet
-        </label>
-
-      </div>
-      <br>
-      <div class="form-check" style="border: 3px solid black; width: 600px; height: 50px; font-size: 30px; display: flex; gap: 15px;" >
-        <input class="form-check" type="checkbox" value="" id="flexCheckIndeterminate">
-        <label class="form-check-label" for="flexCheckIndeterminate" >
-          Schedule Offline Meet
-        </label>
-      </div>
-    </div>
-
-    <div class="center" style="display: flex; position: relative; bottom: 500px; left: 310px;">
-        <div class="tickets">
+        <div class="col-md-8">
+          <div class="tickets">
           <div class="ticket-selector">
             <div class="head">
               <div class="title">BOOK YOUR SLOTS</div>
@@ -349,12 +343,11 @@
             <button type="button" onclick="bookTicket()">Book</button>
           </div>
           <div id="slotsBox"></div>
+          </div>
         </div>
       </div>
     </div>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.slim.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.1/umd/popper.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.min.js"></script>
+<script src="/js/bootstrap.bundle.min.js"></script>
 </body>
 <script>
     if (localStorage.getItem("slots") === null) {

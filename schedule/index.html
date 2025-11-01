@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Schedule • STUTOR</title>
+  <link rel="stylesheet" href="/css/bootstrap.min.css">
+</head>
+<body>
+  <nav class="navbar navbar-light bg-light mb-4">
+    <div class="container">
+      <a class="navbar-brand" href="/">STUTOR</a>
+      <div>
+        <a class="btn btn-outline-secondary" href="/">Home</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container">
+    <div class="row g-4">
+      <div class="col-lg-5">
+        <div class="card shadow-sm">
+          <div class="card-body">
+            <h2 class="h5">Create a meeting</h2>
+            <form id="meetingForm">
+              <div class="mb-3">
+                <label class="form-label">Select Educator</label>
+                <select class="form-select" name="educatorId" id="educatorSelect" required>
+                  <option value="">Loading...</option>
+                </select>
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Title</label>
+                <input class="form-control" name="title" required>
+              </div>
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label class="form-label">Date</label>
+                  <input type="date" class="form-control" name="date" required>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label class="form-label">Time</label>
+                  <input type="time" class="form-control" name="time" required>
+                </div>
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label">Mode</label>
+                <select class="form-select" name="mode" id="modeSelect" required>
+                  <option value="virtual">Virtual</option>
+                  <option value="offline">Offline</option>
+                </select>
+              </div>
+
+              <div class="mb-3" id="virtualFields">
+                <label class="form-label">Meeting link</label>
+                <input class="form-control" name="link" placeholder="Paste a Google Meet link or leave empty to auto-generate (Jitsi)">
+                <div class="form-text">
+                  Prefer Google Meet? Click "New Meet" and paste the link here.
+                </div>
+                <div class="mt-2 d-flex gap-2">
+                  <a class="btn btn-outline-primary" href="https://meet.google.com/new" target="_blank" rel="noopener">New Meet</a>
+                  <button class="btn btn-outline-secondary" type="button" id="generateJitsi">Auto-generate Jitsi</button>
+                </div>
+              </div>
+
+              <div class="mb-3 d-none" id="offlineFields">
+                <div class="form-check mb-2">
+                  <input class="form-check-input" type="checkbox" id="insideCampus">
+                  <label class="form-check-label" for="insideCampus">Inside university campus</label>
+                </div>
+                <label class="form-label">Location</label>
+                <input class="form-control" name="location" placeholder="e.g., Library, Block B, Room 204">
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label">Notes</label>
+                <textarea class="form-control" name="notes" rows="2" placeholder="Optional"></textarea>
+              </div>
+
+              <button class="btn btn-success" type="submit">Save meeting</button>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-7">
+        <div class="card shadow-sm">
+          <div class="card-body">
+            <h2 class="h5">Your meetings</h2>
+            <ul class="list-group" id="meetingsList"></ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="/js/bootstrap.bundle.min.js"></script>
+  <script src="/schedule/script.js"></script>
+</body>
+</html>

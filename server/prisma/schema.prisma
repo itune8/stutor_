@@ -1,0 +1,40 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           Int       @id @default(autoincrement())
+  name         String
+  email        String    @unique
+  passwordHash String
+  role         String    @default("STUDENT")
+  requestedMeetings Meeting[] @relation("RequestedMeetings")
+  receivedMeetings  Meeting[] @relation("ReceivedMeetings")
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+}
+
+model Meeting {
+  id        Int      @id @default(autoincrement())
+  title     String
+  date      String
+  time      String
+  mode      String
+  link      String?
+  location  String?
+  notes     String?
+  status    String   @default("PENDING")
+  requester User     @relation("RequestedMeetings", fields: [requesterId], references: [id])
+  requesterId Int
+  educator  User     @relation("ReceivedMeetings", fields: [educatorId], references: [id])
+  educatorId Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// NOTE: SQLite does not support enums; we store role and status as strings.

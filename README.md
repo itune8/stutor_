@@ -23,6 +23,45 @@ CLICK HERE TO GO TO THE LIVE WEBSITE https://itune8.github.io/stutor_/
 
 [![GPLv3 License](https://img.shields.io/badge/CSS-Style-blue.svg)](https://opensource.org/licenses/)
 [![AGPL License](https://img.shields.io/badge/HTML5-WebDev-green.svg)](http://www.gnu.org/licenses/agpl-3.0)
+Modernized full-stack version of STUTOR with:
+
+- Responsive Bootstrap 5 UI and lazy-loaded media
+- Working authentication (signup/login)
+- Meeting scheduler (virtual/offline) with auto-generated Jitsi link or Google Meet option
+- Real database via Prisma (SQLite in dev, Postgres supported)
+- Node.js/Express backend serving APIs and static files
+
+## Quick start
+
+1) Backend setup
+
+Copy server/.env.example to server/.env and adjust if needed.
+
+2) Install and run
+
+```
+cd server
+npm install
+npx prisma generate
+npx prisma migrate dev --name init
+npm run dev
+```
+
+The app serves the static site and APIs at http://localhost:3000
+
+## API
+
+- POST /api/auth/signup { name, email, password }
+- POST /api/auth/login { email, password }
+- GET /api/meetings (Bearer token)
+- POST /api/meetings { title, date, time, mode, link?, location?, notes? } (Bearer token)
+- PUT /api/meetings/:id (Bearer token)
+- DELETE /api/meetings/:id (Bearer token)
+
+## Notes
+
+- To use Postgres, set DATABASE_PROVIDER and DATABASE_URL in server/.env and run `npm run db:deploy`.
+- Google Meet links require user action unless you configure Google APIs; we provide a one-click "New Meet" button and auto Jitsi link.
 [![AGPL License](https://img.shields.io/badge/JavaScript-Backend-Orange.svg)](http://www.gnu.org/licenses/agpl-3.0)
 [![AGPL License](https://img.shields.io/badge/Data-LocalStorage-purple.svg)](http://www.gnu.org/licenses/agpl-3.0)
 
@@ -39,6 +78,7 @@ CLICK HERE TO GO TO THE LIVE WEBSITE https://itune8.github.io/stutor_/
    
 5. **Provide Feedback:** After each session, provide feedback to help improve the learning experience for both tutors and students.
 
+Here)
 ## Screenshots
 
 ![App Screenshot](https://via.placeholder.com/468x300?text=App+![Uploading Screenshot 2024-03-16 at 12.31.17 AM.png…]()
