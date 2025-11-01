@@ -1,0 +1,8 @@
+# Exclude server-side code and heavy dependencies from static deploys
+server/
+server/**
+
+# Common large/unnecessary artifacts
+**/*.db
+**/*.db-journal
+**/.DS_Store
